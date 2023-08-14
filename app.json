@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "zevon-mobile",
+    "slug": "zevon-mobile"
+  }
+}
