@@ -129,7 +129,7 @@ const handleLogin = async () => {
           </TouchableOpacity>
           </View>
           <TouchableOpacity style={S.loginBtn} onPress={handleLogin}>
-            {isLoading ? <ActivityIndicator /> : <Text style={{color: '#fff'}}>Login</Text>}
+            {isLoading ? <ActivityIndicator color={'#fff'}/> : <Text style={{color: '#fff'}}>Login</Text>}
           </TouchableOpacity>
           {/* Dont have an account?  */}
           <View style={S.cen}>

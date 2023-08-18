@@ -7,11 +7,11 @@
  import { useFonts } from "expo-font";
  import { useCallback } from "react";
  import * as SplashScreen from 'expo-splash-screen';
+ import AppLoading from "expo-app-loading";
 
 
 
 // This function ensures that don't load the app until the required fonts are loaded
- SplashScreen.preventAutoHideAsync();
 
 
 
@@ -21,21 +21,17 @@
 
    // requiring fonts that we wank to use
    const [fontsLoaded] = useFonts({
-      PrimaryFont: require("../fonts/Inco-Regular.ttf"),
+      "Inco": require("../fonts/Inco-Regular.ttf"),
      
    })
 
-   // its like useEffect hook
-   const onLayoutRootView = useCallback(async () => {
-      if(fontsLoaded){
-         await SplashScreen.hideAsync();
-      }
+   if(!fontsLoaded){
+      return <AppLoading>Error , fonts not loaded</AppLoading>
+   }
 
-   } ,[fontsLoaded])
+  
 
-   if(!fontsLoaded) return null;
-
-    return <Stack onLayout={onLayoutRootView} />
+    return <Stack/>
  }
 
  export default Layout;

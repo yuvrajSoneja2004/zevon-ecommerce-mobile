@@ -7,6 +7,7 @@ import Loader from '../../utils/Loader'
 import { SafeAreaView } from 'react-native'
 import { contactUsIcons } from '../../utils/contactUsIcons'
 import { categoryImages } from '../../utils/categoryImages'
+import { useRouter } from 'expo-router'
 
 
 export default function HomeComp() {
@@ -14,6 +15,8 @@ export default function HomeComp() {
     // Trending Products State
     const [trendingProducts , setTrendingProducts] = useState([]);
     const [isLoadingTrending , setIsLoadingTrending] = useState(false)
+
+    const navigate = useRouter();
 
 
 // Slider Images
@@ -73,7 +76,7 @@ getData();
         <FlatList 
         data={categoryImages}
         renderItem={({item}) => {
-            return <TouchableOpacity><Image  source={item} style={{width: 100 , height: 100}} /></TouchableOpacity>
+            return <TouchableOpacity onPress={() => {navigate.push(`/singleCategoryScreen/${item.query}`)}}><Image  source={item.img} style={{width: 100 , height: 100}} /></TouchableOpacity>
         }}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -164,7 +167,7 @@ contactUs : {
         marginTop: 10,
         marginBottom: 15,
         fontSize: 20,
-        fontFamily: 'monospace'
+        fontFamily: 'Inco'
     },
 searchBox: {
 paddingVertical: 7,

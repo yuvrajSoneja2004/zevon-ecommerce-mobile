@@ -9,7 +9,7 @@ export default function BottomBar() {
             bottomBarData.map((ma) => (
                <TouchableOpacity style={{display: 'flex' , justifyContent: 'center' , alignItems: 'center'}}>
                  <Image  source={ma.icon} style={{width: 27 , height: 27,marginBottom: 6}} key={ma.id}/>
-                 <Text>{ma.title}</Text>
+                 <Text style={{fontFamily: "Inco"}}>{ma.title}</Text>
                </TouchableOpacity>
 
             ))
