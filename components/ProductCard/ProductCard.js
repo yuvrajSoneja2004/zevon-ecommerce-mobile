@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useRouter } from 'expo-router';
 
-export default function ProductCard({productTitle,productImage, productPrice ,isBS}) {
+export default function ProductCard({productTitle,productImage, productPrice ,isBS, productID}) {
 
 let numFormat = new Intl.NumberFormat();
+let navigate = useRouter();
 
   return (
-    <TouchableOpacity style={S.whole()}>
+    <TouchableOpacity style={S.whole()} onPress={() => {navigate.push(`/singleProduct/${productID}`)}}>
       <View style={{width: '100%' , height: 20 , }}>
     {
       isBS ? <View style={{width: 100 , height: 100 , backgroundColor: '#000'}}><Text style={{color: 'white' , width: '100%' , height: '100%', paddingHorizontal: 3 ,fontSize: 13 }}>BEST SELLER</Text></View> : null

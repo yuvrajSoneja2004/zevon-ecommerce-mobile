@@ -10,7 +10,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 function singleidScreen() {
   const {id} = useSearchParams();
 
-  const [products ,  setProducts] = useState([]);
+  const [products ,  setProducts] = useState({});
   const [isLoading , setIsLoading] = useState(false)
   useEffect(() => {
     const getData = async () => {
@@ -40,7 +40,7 @@ console.log(products)
             <FlatList 
             data={products}
             renderItem={({item , index}) => {
-                return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price}/>
+                return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price} productID={item?._id}/>
             }}
             numColumns={2}
             />

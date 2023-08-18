@@ -90,7 +90,7 @@ getData();
             <FlatList 
             data={trendingProducts.slice(0 ,6)}
             renderItem={({item , index}) => {
-                return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price}/>
+                return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price} productID={item?._id}/>
             }}
             numColumns={2}
             />
@@ -120,7 +120,7 @@ getData();
                 return curProduct.isBestSeller === true;
             })}
             renderItem={({item , index}) => {
-                return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price} isBestSeller={item?.isBestSeller}/>
+                return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price} isBestSeller={item?.isBestSeller} productID={item?._id}/>
             }}
             numColumns={2}
             />
