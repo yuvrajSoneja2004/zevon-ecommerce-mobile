@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground  , TextInput, Button, SafeAreaView, TouchableOpacity, Image} from 'react-native'
+import { View, Text, StyleSheet, ImageBackground  , TextInput, Button, SafeAreaView, TouchableOpacity, Image, ActivityIndicator} from 'react-native'
 import React, { useState } from 'react'
 import { globalTheme } from '../../utils/theme';
 import { useRouter } from 'expo-router';
@@ -19,6 +19,9 @@ const [userPass , setUserPass] = useState("");
 const [conformUserPass , setConformUserPass] = useState("");
 
 
+const [isLoading , setisLoading] = useState(false)
+
+
 
 
 // Send Data to Backend
@@ -36,7 +39,7 @@ const handleRegister = async () => {
 
         // sending data to db
     
-
+        setisLoading(true)
       try {
         const fetchDat = await axios.post("https://purple-anemone-veil.cyclic.app/register", {
             userName: userName,
@@ -48,13 +51,16 @@ const handleRegister = async () => {
         if(resD?.res == "ok"){
             console.log("👍🏿 success");
             navigate.push("/home")
+            setisLoading(false)
             
 
         }
       } catch (error) {
         console.log(error)
+        setisLoading(false)
         alert(" 😣 Error");
       }
+      
        
     }
 }
@@ -69,7 +75,7 @@ const handleLogin = async () => {
        
 
         // sending data to db
-    
+    setisLoading(true)
 
       try {
         const fetchDat = await axios.post("https://purple-anemone-veil.cyclic.app/login", {
@@ -81,12 +87,16 @@ const handleLogin = async () => {
         if(resD?.res == "ok"){
             console.log("👍🏿 success");
             navigate.push("/home")
+            setisLoading(false)
         }
         else {
             alert("Account with these details does'nt exists.")
+            setisLoading(false)
         }
       } catch (error) {
         console.log(error)
+        setisLoading(false)
+
         alert("Account with these details does'nt exists.");
       }
        
@@ -119,7 +129,7 @@ const handleLogin = async () => {
           </TouchableOpacity>
           </View>
           <TouchableOpacity style={S.loginBtn} onPress={handleLogin}>
-            <Text style={{color: '#fff'}}>Login</Text>
+            {isLoading ? <ActivityIndicator /> : <Text style={{color: '#fff'}}>Login</Text>}
           </TouchableOpacity>
           {/* Dont have an account?  */}
           <View style={S.cen}>

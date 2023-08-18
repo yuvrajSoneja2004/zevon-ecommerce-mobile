@@ -4,7 +4,8 @@ import { Provider } from 'react-redux'
 import { GlobalStore } from '../store/store'
 import { Stack, useRouter } from 'expo-router'
 import Gay from '../components/Gay'
-import RegisterComp from '../components/RegisterComp/RegisterComp'
+import RegisterComp from '../components/RegisterComp/RegisterComp';
+
 function index() {
     const navigate = useRouter()
    

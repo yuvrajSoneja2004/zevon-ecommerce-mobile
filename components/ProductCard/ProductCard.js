@@ -1,13 +1,28 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-export default function ProductCard({productTitle,productImage, productPrice}) {
+export default function ProductCard({productTitle,productImage, productPrice ,isBS}) {
+
+let numFormat = new Intl.NumberFormat();
+
   return (
-    <TouchableOpacity style={S.whole}>
+    <TouchableOpacity style={S.whole()}>
+      <View style={{width: '100%' , height: 20 , }}>
+    {
+      isBS ? <View style={{width: 100 , height: 100 , backgroundColor: '#000'}}><Text style={{color: 'white' , width: '100%' , height: '100%', paddingHorizontal: 3 ,fontSize: 13 }}>BEST SELLER</Text></View> : null
+    }
+      </View>
         <View style={S.productImg}><Image source={{uri: productImage }} style={{height: '100%' , width: '100%'}}/></View>
       <View style={S.productDetails}>
-      <Text>{productTitle}</Text>
-      <Text>{parseInt(productPrice) - 120}</Text>
+      <Text>{productTitle?.slice(0 ,30)}...</Text>
+    <View style={{display: 'flex' , flexDirection: 'row' , alignItems: 'center' , justifyContent: 'space-between'}}>
+    <View style={S.priceDetails}>
+    <Text style={S.discountedPrice}>₹{numFormat.format(parseInt(productPrice))}</Text>
+    <Text>₹{numFormat.format(parseInt(productPrice) - 120)}</Text>
+    </View>
+    {/* Wishlist  */}
+    <TouchableOpacity style={{borderWidth: .4 ,borderRadius: 50, padding: 5}}><Image  source={require("../../icons/heart.png")} style={{width: 15 , height: 15}}/></TouchableOpacity>
+    </View>
       </View>
     </TouchableOpacity>
   )
@@ -15,21 +30,36 @@ export default function ProductCard({productTitle,productImage, productPrice}) {
 // Will move to external file later
 
 const S = StyleSheet.create({
-    whole: {
-       height: 240,
-       borderWidth: 2,
-       borderColor: 'black',
-       width: '50%', // Two columns, with a small gap for spacing
-    marginBottom: 10, // Add spacing between rows
-    },
+
+priceDetails: {
+  display: 'flex',
+  flexDirection: 'row',
+  marginTop: 5
+}
+  ,
+  discountedPrice: {
+    marginRight: 8,
+    textDecorationLine: "line-through",
+    color: '#a8a5a5'
+  },
+    whole: () => (
+      {
+        height: 290,
+        width: '50%', // Two columns, with a small gap for spacing
+     // marginBottom: 10, // Add spacing between rows
+     borderWidth: 1,
+     borderColor: '#E4DCCF',
+     marginVertical: 7,
+     borderRadius: 5
+     }
+    ),
     productImg : {
         width: '100%',
         height: '70%',
-        borderWidth: 3,
-        borderColor: 'pink'
     },
     productDetails: {
         width: '100%',
-        height: '30%'
+        height: '30%',
+        padding: 5
     }
 })

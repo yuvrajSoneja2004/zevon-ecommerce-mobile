@@ -3,11 +3,18 @@ import React, { useEffect, useState } from 'react'
 import { SliderBox } from 'react-native-image-slider-box'
 import ProductCard from '../ProductCard/ProductCard'
 import axios from 'axios'
+import Loader from '../../utils/Loader'
+import { SafeAreaView } from 'react-native'
+import { contactUsIcons } from '../../utils/contactUsIcons'
+import { categoryImages } from '../../utils/categoryImages'
+
 
 export default function HomeComp() {
 
-    // Trending Products
-    const [trendingProducts , setTrendingProducts] = useState([])
+    // Trending Products State
+    const [trendingProducts , setTrendingProducts] = useState([]);
+    const [isLoadingTrending , setIsLoadingTrending] = useState(false)
+
 
 // Slider Images
 const sliderImgs = [
@@ -16,16 +23,19 @@ const sliderImgs = [
     require("../../assets/slider-images/3.png"),
 ]
 
-// Category Images
-const categoryImages = [
-    require("../../assets/category_images/1.png"),
-    require("../../assets/category_images/2.png"),
-    require("../../assets/category_images/3.png"),
-    require("../../assets/category_images/4.png"),
+
+
+// Special offers
+const specialOffers = [
+    require("../../assets/1.png"),
+    require("../../assets/2.png"),
 ]
+
+// Contact us Icons
 
 useEffect(() => {
     const getData = async (req , res) => {
+        setIsLoadingTrending(true)
         try {
             const fetchData = await axios.get("https://purple-anemone-veil.cyclic.app/sale");
             const res = fetchData.data;
@@ -35,13 +45,17 @@ useEffect(() => {
         } catch (error) {
             alert("error at the tine of fetching data" + error)
         }
+        finally {
+            setIsLoadingTrending(false)
+        }
     }
-getData()
+getData();
 } , [])
 
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+   <SafeAreaView>
+     <ScrollView showsVerticalScrollIndicator={false}>
         <View style={S.searchBox}>
         <View style={S.darkModeBox}><Image source={require("../../assets/night.png")} style={{width: 25 , height: 25}} />
         </View>
@@ -53,7 +67,7 @@ getData()
             </View>
         </View>
         </View>
-      <SliderBox  images={sliderImgs} dotColor="red" sliderBoxHeight={400} autoplay circleloop resizeMode={'cover'}/>
+      <SliderBox  images={sliderImgs} dotColor="#000" sliderBoxHeight={400} autoplay circleloop resizeMode={'cover'}/>
       {/* Category Images  */}
       <View style={S.categoryImagesBox}>
         <FlatList 
@@ -66,30 +80,92 @@ getData()
         />
       </View>
       {/* Trending Products  */}
-      <View style={S.productGrid}>
-      <FlatList 
-        data={trendingProducts}
-        renderItem={({item}) => {
-            return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price}/>
-        }}
-        numColumns={2}
+      <View style={S.productGrid(isLoadingTrending)}>
+        <Text style={S.trendingText}>Trending Products</Text>
+     {
+        isLoadingTrending ? <Loader size="large" color="#000"/> : (
+            <FlatList 
+            data={trendingProducts.slice(0 ,6)}
+            renderItem={({item , index}) => {
+                return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price}/>
+            }}
+            numColumns={2}
+            />
+        )
+     }
+     </View>
+     {/* Lookdown 2023 and etc */}
+     <View style={{paddingHorizontal: 10}}> 
+     <Text style={S.trendingText}>Some Special Offers</Text>
+     {/* img 1  */}
+    <FlatList 
+    data={specialOffers}
+    renderItem={({item}) => {
+        return  <View style={{width: 300 , height: 200 , margin: 5}}><Image source={item} style={{width: '100%' , height: '100%'}} resizeMode="cover" /></View>
+    }}
+    horizontal
+    showsHorizontalScrollIndicator={false}
+     />
+     </View>
+       {/* Best Seller Products  */}
+       <View style={S.productGrid(isLoadingTrending)}>
+        <Text style={S.trendingText}>Best Seller</Text>
+     {
+        isLoadingTrending ? <Loader size="large" color="#000"/> : (
+            <FlatList 
+            data={trendingProducts.filter((curProduct) => {
+                return curProduct.isBestSeller === true;
+            })}
+            renderItem={({item , index}) => {
+                return <ProductCard  productTitle={item?.name} productImage={item?.images[0]} productPrice={item?.price} isBestSeller={item?.isBestSeller}/>
+            }}
+            numColumns={2}
+            />
+        )
+     }
+     </View>
+     <View style={S.contactUs}> 
+        <FlatList
+        data={contactUsIcons}
+        renderItem={({item}) => (
+            <View style={{paddingVertical: 30}}>
+                <Image  source={item.icon}  style={{width: 25, height: 25}}/>
+                <Text>{item.title}</Text>
+                <Text>{item.desc}</Text>
+            </View>
+        )}
         />
-
-      </View>
+     </View>
     </ScrollView>
+   </SafeAreaView>
   )
 }
 
 // Move to external file later
 const S = StyleSheet.create({
-    productGrid: {
-         flex: 1,
-        flexDirection: 'row', // This creates a row layout
-        flexWrap: 'wrap', // This allows items to wrap to the next row
-        justifyContent: 'space-between', // Di
-        paddingHorizontal: 10
-    }
+
+contactUs : {
+    width: "100%",
+     display: 'flex' ,
+      justifyContent: 'center' ,
+       alignItems: 'center'
+}
+,
+    productGrid: (isLoadingTrending) => (
+        {
+            flex: 1,
+           paddingHorizontal: 10,
+           height: isLoadingTrending ? 300 : "auto",
+           
+       }
+    )
     ,
+    trendingText: {
+        marginTop: 10,
+        marginBottom: 15,
+        fontSize: 20,
+        fontFamily: 'monospace'
+    },
 searchBox: {
 paddingVertical: 7,
 paddingHorizontal: 20,
