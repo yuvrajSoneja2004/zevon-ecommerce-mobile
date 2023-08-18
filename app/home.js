@@ -1,7 +1,8 @@
 import React from 'react'
-import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import HomeComp from '../components/Home/HomeComp'
 import { Stack } from 'expo-router';
+import BottomBar from '../components/BottomBar/BottomBar';
 
 
 function home() {
@@ -26,9 +27,24 @@ function home() {
         
       }}
       />
+        <BottomBar />
        <HomeComp />
     </SafeAreaView>
   )
 }
+
+const S = StyleSheet.create({
+  bottomStyle: {
+     width: '100%',
+     position: 'absolute',
+    //  height: "100%",
+    //  zIndex: 1,
+
+    backgroundColor: 'transperent',
+      display: 'flex',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end'
+  }
+})
 
 export default home

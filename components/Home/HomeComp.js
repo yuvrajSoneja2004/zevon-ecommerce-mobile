@@ -54,7 +54,7 @@ getData();
 
 
   return (
-   <SafeAreaView>
+   <SafeAreaView style={{flex: 1}}>
      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={S.searchBox}>
         <View style={S.darkModeBox}><Image source={require("../../assets/night.png")} style={{width: 25 , height: 25}} />

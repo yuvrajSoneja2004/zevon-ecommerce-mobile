@@ -12,7 +12,7 @@ let numFormat = new Intl.NumberFormat();
       isBS ? <View style={{width: 100 , height: 100 , backgroundColor: '#000'}}><Text style={{color: 'white' , width: '100%' , height: '100%', paddingHorizontal: 3 ,fontSize: 13 }}>BEST SELLER</Text></View> : null
     }
       </View>
-        <View style={S.productImg}><Image source={{uri: productImage }} style={{height: '100%' , width: '100%'}}/></View>
+        <View style={S.productImg}><Image source={{uri: productImage }} style={{height: '100%' , width: '100%', zIndex: -399}}/></View>
       <View style={S.productDetails}>
       <Text>{productTitle?.slice(0 ,30)}...</Text>
     <View style={{display: 'flex' , flexDirection: 'row' , alignItems: 'center' , justifyContent: 'space-between'}}>
