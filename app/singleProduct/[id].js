@@ -6,6 +6,7 @@ import axios from 'axios';
 import Loader from '../../utils/Loader';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import {SliderBox} from 'react-native-image-slider-box';
+import { useSelector } from 'react-redux';
 
 function singleProductScreen() {
   const {id} = useSearchParams();
@@ -13,6 +14,11 @@ function singleProductScreen() {
   const [products ,  setProducts] = useState([]);
   const [isLoading , setIsLoading] = useState(false);
   const [companyURL , setCompanyURL] = useState("");
+
+  // theme
+  const isDarkMode = useSelector(state => state.theme.isDarkMode);
+  const theme = useSelector(state => isDarkMode ? state.theme.darkTheme : state.theme.lightTheme);
+
   const sliderImgs = [
     require("../../assets/slider-images/1.png"),
     require("../../assets/slider-images/2.png"),
@@ -66,7 +72,6 @@ useEffect(() => {
 } ,[companyURL])
 console.log(companyURL , 'the com url')
 
-let onlyCom = products?.company;
 let single = products[0]
 let images = single?.images || [];
 let numFormat = new Intl.NumberFormat();
@@ -80,10 +85,20 @@ if (!products) return null;
       options={{
         headerShadowVisible: false,
         headerTitleAlign: 'center',
+        headerStyle: {backgroundColor: theme.bg},
+        contentStyle: {backgroundColor: theme.bg},
         headerRight: () => {
             return <View style={{display: 'flex' , flexDirection: 'row' , alignItems: 'center'}}>
-                <TouchableOpacity><Image  source={require("../../icons/search.png")} style={{width: 22 , height: 22 }}/></TouchableOpacity>
-                <TouchableOpacity><Image  source={require("../../assets/shopping-bag.png")} style={{width: 25 , height: 25 , marginLeft: 10}}/></TouchableOpacity>
+                <TouchableOpacity>
+                    {
+                        !isDarkMode ? <Image  source={require("../../icons/search.png")} style={{width: 22 , height: 22 }}/> : <Image  source={require("../../icons/dark_search.png")} style={{width: 22 , height: 22 }}/>
+                    }
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    {
+                        isDarkMode ? <Image  source={require("../../assets/dark_shopping.png")} style={{width: 25 , height: 25 , marginLeft: 20}}/> : <Image  source={require("../../assets/shopping-bag.png")} style={{width: 25 , height: 25 , marginLeft: 20}}/>
+                    }
+                </TouchableOpacity>
             </View>
         },
         headerTitle: () => {

@@ -4,6 +4,7 @@ import HomeComp from '../components/Home/HomeComp'
 import { Stack } from 'expo-router';
 import BottomBar from '../components/BottomBar/BottomBar';
 import { useSelector } from 'react-redux';
+import StackScreen from '../components/stackScreen';
 
 
 function home() {
@@ -13,21 +14,7 @@ function home() {
 
   return (
     <SafeAreaView style={{flex: 1 , backgroundColor: theme.bg}}>
-         <Stack.Screen 
-      options={{
-        headerShadowVisible: false,
-        headerTitleAlign: 'center',
-        headerTitle: () => {
-          return <Image  source={require("../assets/logo.png")} style={{width: 100 , height: 30}}/>
-        },
-        headerRight: () => {
-            return <TouchableOpacity>
-                <Image  source={require("../assets/shopping-bag.png")} style={{width: 25 , height: 25 }}/>
-            </TouchableOpacity>
-        }
-        
-      }}
-      />
+        <StackScreen />
         <BottomBar />
        <HomeComp />
     </SafeAreaView>

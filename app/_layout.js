@@ -1,4 +1,4 @@
- // ? Currently following tutorial of react native from : https://www.youtube.com/watch?v=mJ3bGvy0WAY&ab_channel=JavaScriptMastery
+
 
  // * Step 1 : Import Stack Component from expo-router
  import { Stack } from "expo-router";
@@ -35,6 +35,7 @@ import { GlobalStore } from "../store/store";
 
     return (
       <Provider store={GlobalStore}>
+ 
          <Stack/>
       </Provider>
     )

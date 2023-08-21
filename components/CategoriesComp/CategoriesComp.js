@@ -3,6 +3,7 @@ import React from 'react'
 import { SliderBox } from 'react-native-image-slider-box'
 import { SafeAreaView } from 'react-native'
 import { ScrollView } from 'react-native'
+import StackScreen from '../stackScreen'
 
 
 export default function CategoriesComp() {
@@ -19,6 +20,7 @@ const sliderImgs = [
 
   return (
     <SafeAreaView>
+      <StackScreen />
       <ScrollView>
       <SliderBox  images={sliderImgs} dotColor="#000" sliderBoxHeight={400} autoplay circleloop resizeMode={'cover'}/>
       </ScrollView>
