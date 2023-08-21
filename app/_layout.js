@@ -8,6 +8,8 @@
  import { useCallback } from "react";
  import * as SplashScreen from 'expo-splash-screen';
  import AppLoading from "expo-app-loading";
+import { Provider } from "react-redux";
+import { GlobalStore } from "../store/store";
 
 
 
@@ -31,7 +33,11 @@
 
   
 
-    return <Stack/>
+    return (
+      <Provider store={GlobalStore}>
+         <Stack/>
+      </Provider>
+    )
  }
 
  export default Layout;

@@ -3,14 +3,16 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import HomeComp from '../components/Home/HomeComp'
 import { Stack } from 'expo-router';
 import BottomBar from '../components/BottomBar/BottomBar';
+import { useSelector } from 'react-redux';
 
 
 function home() {
-
+  const isDarkMode = useSelector(state => state.theme.isDarkMode);
+  const theme = useSelector(state => isDarkMode ? state.theme.darkTheme : state.theme.lightTheme);
 
 
   return (
-    <SafeAreaView style={{flex: 1 , backgroundColor: '#fff'}}>
+    <SafeAreaView style={{flex: 1 , backgroundColor: theme.bg}}>
          <Stack.Screen 
       options={{
         headerShadowVisible: false,
@@ -23,7 +25,6 @@ function home() {
                 <Image  source={require("../assets/shopping-bag.png")} style={{width: 25 , height: 25 }}/>
             </TouchableOpacity>
         }
-        
         
       }}
       />

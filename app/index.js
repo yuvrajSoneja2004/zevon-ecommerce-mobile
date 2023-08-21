@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, SafeAreaView, Text, View } from 'react-native'
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
 import { Provider } from 'react-redux'
 import { GlobalStore } from '../store/store'
 import { Stack, useRouter } from 'expo-router'

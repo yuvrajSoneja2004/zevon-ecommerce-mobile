@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, FlatList, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Stack, useSearchParams } from 'expo-router'
 import StackScreen from '../../components/stackScreen';
 import axios from 'axios';
@@ -47,9 +47,7 @@ getData();
 useEffect(() => {
     const getCompanyLogo = async () => {
         try {
-            let options = {
-                
-            }
+            
             let fetchData = await axios.get(`https://api.api-ninjas.com/v1/logo?name=${products[0]?.company != undefined ? products[0].company : "Google"}` , {
                 headers: {
                     'X-Api-Key' : 'HjlflNrfltAlAm6bwLj+EQ==HBP8QZiRFzatJNZ2'
@@ -70,7 +68,9 @@ console.log(companyURL , 'the com url')
 
 let onlyCom = products?.company;
 let single = products[0]
-let images = single?.images || []
+let images = single?.images || [];
+let numFormat = new Intl.NumberFormat();
+
 
 if(isLoading) return <Loader size={'large'} color={'#000'}/>
 if (!products) return null;
@@ -82,8 +82,8 @@ if (!products) return null;
         headerTitleAlign: 'center',
         headerRight: () => {
             return <View style={{display: 'flex' , flexDirection: 'row' , alignItems: 'center'}}>
-                <TouchableOpacity><Image  source={require("../../icons/search.png")} style={{width: 25 , height: 25 }}/></TouchableOpacity>
-                <TouchableOpacity><Image  source={require("../../assets/shopping-bag.png")} style={{width: 25 , height: 25 }}/></TouchableOpacity>
+                <TouchableOpacity><Image  source={require("../../icons/search.png")} style={{width: 22 , height: 22 }}/></TouchableOpacity>
+                <TouchableOpacity><Image  source={require("../../assets/shopping-bag.png")} style={{width: 25 , height: 25 , marginLeft: 10}}/></TouchableOpacity>
             </View>
         },
         headerTitle: () => {
@@ -105,13 +105,55 @@ if (!products) return null;
             horizontal
             />
         </View> */}
-        <Text>{single?.name}</Text>
-        <Text>{companyURL[0]?.image}</Text>
+       <View style={{paddingHorizontal: 8}}>
+        <Text style={{fontSize: 20 , marginVertical: 7}}>{single?.company.toUpperCase()}</Text>
+        <Text style={{fontSize: 20 , marginVertical: 7}}>{single?.name}</Text>
+        <View style={{display: 'flex' , flexDirection: 'row' , alignItems: 'center'}}>
+        <Image source={require("../../icons/star.png")} style={{width: 25 , height: 25, marginRight: 10 }}/>
+        <Text>{single?.rating}</Text>
+        <Text style={{marginLeft: 14}}>{numFormat.format(single?.reviews)} Reviews</Text>
+        </View>
+        <View>
+            <View style={{display : 'flex' , flexDirection:'row' , alignItems: 'center'}}>
+            <Text style={{fontSize: 27, textDecorationLine:"line-through", fontWeight: 'bold'}}>₹{numFormat.format(parseInt(single?.price))}</Text>
+            <Text style={{fontSize: 27,marginLeft: 20 ,fontWeight: 'bold'}}>₹{numFormat.format(parseInt(single?.price) - 120)}</Text>
+            </View>
+        </View>
+        <View>
+            <View style={{display : 'flex' , flexDirection:'row' , alignItems: 'center'}}>
+            <Text style={{fontSize: 27, textDecorationLine:"line-through", fontWeight: 'bold'}}>₹{numFormat.format(parseInt(single?.price))}</Text>
+            <Text style={{fontSize: 27,marginLeft: 20 ,fontWeight: 'bold'}}>₹{numFormat.format(parseInt(single?.price) - 120)}</Text>
+            </View>
+        </View>
+       </View>
         
         </ScrollView>
-      
+        {/* Bottom bar  */}
+        <View style={S.bottomBar}>
+            <TouchableOpacity style={{display: 'flex' , alignItems: 'center', flexDirection: 'row'}}>
+                <Image source={require("../../assets/shopping-bag.png")} style={{width: 25 , height: 25, marginRight: 10 }}/>
+                <Text style={{fontSize: 18}}>Add to Bag</Text>
+            </TouchableOpacity>
+        </View>
     </SafeAreaView>
   )
 }
+
+const S = StyleSheet.create({
+    bottomBar: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: '#fff', // Set your desired background color
+      borderTopWidth: 1,
+      borderTopColor: '#ccc', // Set your desired border color
+      flexDirection: 'row', // or 'column' depending on your design
+      justifyContent: 'space-around', // Adjust as needed
+      alignItems: 'center', // Adjust as needed
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+    },
+  });
 
 export default singleProductScreen

@@ -1,11 +1,15 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useRouter } from 'expo-router';
+import { useSelector } from 'react-redux';
 
 export default function ProductCard({productTitle,productImage, productPrice ,isBS, productID}) {
 
 let numFormat = new Intl.NumberFormat();
 let navigate = useRouter();
+
+const isDarkMode = useSelector(state => state.theme.isDarkMode);
+const theme = useSelector(state => isDarkMode ? state.theme.darkTheme.fontsCol : state.theme.lightTheme.fontsCol);
 
   return (
     <TouchableOpacity style={S.whole()} onPress={() => {navigate.push(`/singleProduct/${productID}`)}}>
@@ -16,14 +20,20 @@ let navigate = useRouter();
       </View>
         <View style={S.productImg}><Image source={{uri: productImage }} style={{height: '100%' , width: '100%', zIndex: -399}}/></View>
       <View style={S.productDetails}>
-      <Text>{productTitle?.slice(0 ,30)}...</Text>
+      <Text  style={{color: theme}}>{productTitle?.slice(0 ,30)}...</Text>
     <View style={{display: 'flex' , flexDirection: 'row' , alignItems: 'center' , justifyContent: 'space-between'}}>
     <View style={S.priceDetails}>
     <Text style={S.discountedPrice}>₹{numFormat.format(parseInt(productPrice))}</Text>
-    <Text>₹{numFormat.format(parseInt(productPrice) - 120)}</Text>
+    <Text style={{color: theme}}>₹{numFormat.format(parseInt(productPrice) - 120)}</Text>
     </View>
     {/* Wishlist  */}
-    <TouchableOpacity style={{borderWidth: .4 ,borderRadius: 50, padding: 5}}><Image  source={require("../../icons/heart.png")} style={{width: 15 , height: 15}}/></TouchableOpacity>
+    <TouchableOpacity style={{ borderColor: theme ,borderWidth: .4 ,borderRadius: 50, padding: 5}}>{
+      !isDarkMode ? (
+        <Image  source={require("../../icons/heart.png")} style={{width: 15 , height: 15}}/>
+      ) : (
+        <Image  source={require("../../icons/dark_heart.png")} style={{width: 15 , height: 15}}/>
+      )
+    }</TouchableOpacity>
     </View>
       </View>
     </TouchableOpacity>

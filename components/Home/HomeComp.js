@@ -5,9 +5,11 @@ import ProductCard from '../ProductCard/ProductCard'
 import axios from 'axios'
 import Loader from '../../utils/Loader'
 import { SafeAreaView } from 'react-native'
-import { contactUsIcons } from '../../utils/contactUsIcons'
+import { contactUsIcons, contactUsIconsDark } from '../../utils/contactUsIcons'
 import { categoryImages } from '../../utils/categoryImages'
 import { useRouter } from 'expo-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleTheme } from '../../slices/theme'
 
 
 export default function HomeComp() {
@@ -25,6 +27,13 @@ const sliderImgs = [
     require("../../assets/slider-images/2.png"),
     require("../../assets/slider-images/3.png"),
 ]
+
+// USing global theme
+const isDarkMode = useSelector(state => state.theme.isDarkMode);
+const theme = useSelector(state => isDarkMode ? state.theme.darkTheme : state.theme.lightTheme);
+const dispatch = useDispatch();
+
+console.log(theme, 'this is the theme state')
 
 
 
@@ -55,12 +64,17 @@ useEffect(() => {
 getData();
 } , [])
 
-
   return (
-   <SafeAreaView style={{flex: 1}}>
+   <SafeAreaView style={{flex: 1, backgroundColor: theme.bg }}>
      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={S.searchBox}>
-        <View style={S.darkModeBox}><Image source={require("../../assets/night.png")} style={{width: 25 , height: 25}} />
+        <View style={S.darkModeBox}><TouchableOpacity onPress={() => {dispatch(toggleTheme())}}>{
+            !isDarkMode ? (
+                <Image source={require("../../assets/night.png")} style={{width: 25 , height: 25}}  />
+            ) : (
+                <Image source={require("../../assets/sun.png")} style={{width: 25 , height: 25 }}  />
+            )
+        }</TouchableOpacity>
         </View>
         <View style={S.inputWrapper}>
             <View style={{width: '100%' , display: 'flex' , justifyContent: 'center' , alignItems: 'center',     backgroundColor: '#ebebeb'
@@ -84,7 +98,7 @@ getData();
       </View>
       {/* Trending Products  */}
       <View style={S.productGrid(isLoadingTrending)}>
-        <Text style={S.trendingText}>Trending Products</Text>
+        <Text style={S.trendingText(theme.fontsCol)}>Trending Products</Text>
      {
         isLoadingTrending ? <Loader size="large" color="#000"/> : (
             <FlatList 
@@ -129,12 +143,12 @@ getData();
      </View>
      <View style={S.contactUs}> 
         <FlatList
-        data={contactUsIcons}
+        data={!isDarkMode ? contactUsIcons : contactUsIconsDark}
         renderItem={({item}) => (
             <View style={{paddingVertical: 30}}>
                 <Image  source={item.icon}  style={{width: 25, height: 25}}/>
-                <Text>{item.title}</Text>
-                <Text>{item.desc}</Text>
+                <Text style={{color: theme.fontsCol}}>{item.title}</Text>
+                <Text style={{color: theme.fontsCol}}>{item.desc}</Text>
             </View>
         )}
         />
@@ -163,12 +177,15 @@ contactUs : {
        }
     )
     ,
-    trendingText: {
-        marginTop: 10,
-        marginBottom: 15,
-        fontSize: 20,
-        fontFamily: 'Inco'
-    },
+    trendingText: (color) => (
+        {
+            marginTop: 10,
+            marginBottom: 15,
+            fontSize: 20,
+            color: color,
+            fontFamily: 'Inco'
+        }
+    ),
 searchBox: {
 paddingVertical: 7,
 paddingHorizontal: 20,
