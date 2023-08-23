@@ -4,6 +4,8 @@ import { globalTheme } from '../../utils/theme';
 import { useRouter } from 'expo-router';
 import { baseServerUrl } from '../../utils/baseServerUrl';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserInfo } from '../../slices/userInfo';
 
 export default function RegisterComp() {
 
@@ -17,11 +19,26 @@ const [userName , setUserName] = useState("");
 const [userEmail , setUserEmail] = useState("");
 const [userPass , setUserPass] = useState("");
 const [conformUserPass , setConformUserPass] = useState("");
+const [isLoading , setisLoading] = useState(false);
 
 
-const [isLoading , setisLoading] = useState(false)
+// Storing User info
+const userProfileInfo = useSelector(state => state.userInfo);
+const dispatch = useDispatch();
 
 
+
+// Get particular data
+const getUserData = async () => {
+    try {
+        let fetchData = await axios.get(`https://purple-anemone-veil.cyclic.app/getUserAccount/yuvrajdev20004@gmail.com`);
+        let res = await fetchData.data;
+        console.log("Yeah ababy " , res)
+        dispatch(getUserInfo(res));
+    } catch (error) {
+        console.log("error form clident , from getUSerData" , error)
+    }
+}
 
 
 // Send Data to Backend
@@ -52,7 +69,7 @@ const handleRegister = async () => {
             console.log("👍🏿 success");
             navigate.push("/home")
             setisLoading(false)
-            
+           
 
         }
       } catch (error) {
@@ -87,7 +104,9 @@ const handleLogin = async () => {
         if(resD?.res == "ok"){
             console.log("👍🏿 success");
             navigate.push("/home")
-            setisLoading(false)
+            setisLoading(false);
+            // Calls user data endpoint 
+            getUserData();
         }
         else {
             alert("Account with these details does'nt exists.")

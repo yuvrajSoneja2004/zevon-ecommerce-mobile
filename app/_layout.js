@@ -4,16 +4,20 @@
  import { Stack } from "expo-router";
 
  // Importing neccessary functions to use custom fonts
- import { useFonts } from "expo-font";
- import { useCallback } from "react";
- import * as SplashScreen from 'expo-splash-screen';
  import AppLoading from "expo-app-loading";
 import { Provider } from "react-redux";
 import { GlobalStore } from "../store/store";
+import { Text, View } from "react-native";
+import { useState } from "react";
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback } from "react";
+
 
 
 
 // This function ensures that don't load the app until the required fonts are loaded
+SplashScreen.preventAutoHideAsync();
 
 
 
@@ -21,24 +25,28 @@ import { GlobalStore } from "../store/store";
  // * Step 2 : Create a function that returns Stack component so that we can  use it in whole app
  const Layout = () => {
 
-   // requiring fonts that we wank to use
    const [fontsLoaded] = useFonts({
-      "Inco": require("../fonts/Inco-Regular.ttf"),
-     
-   })
-
-   if(!fontsLoaded){
-      return <AppLoading>Error , fonts not loaded</AppLoading>
-   }
-
+      'Roboto-Medium': require('../assets/fonts/Roboto-Medium.ttf'),
+    });
+  
+    const onLayoutRootView = useCallback(async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    }, [fontsLoaded]);
+  
+    if (!fontsLoaded) {
+      return null;
+    }
   
 
+  
     return (
       <Provider store={GlobalStore}>
- 
-         <Stack/>
+         <Stack onLayout={onLayoutRootView}/>
       </Provider>
     )
  }
+
 
  export default Layout;

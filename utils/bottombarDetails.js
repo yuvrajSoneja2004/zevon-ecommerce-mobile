@@ -16,13 +16,13 @@ export const bottomBarData = [
         id: "SALE_LINK",
         icon : require("../icons/bottom_bar/sale.png"),
         title: "Sale",
-        endpoint: "/sale_products"
+        endpoint: "/sale"
     },
     {
         id: "USER_ACCOUNT_LINK",
         icon : require("../icons/bottom_bar/user.png"),
         title: "Account",
-        endpoint: "/user_account"
+        endpoint: "/userAccount"
     },
     {
         id: "ABOUT_LINK",
@@ -50,13 +50,13 @@ export const bottomBarDataDark = [
         id: "SALE_LINK",
         icon : require("../icons/bottom_bar/dark_sale.png"),
         title: "Sale",
-        endpoint: "/sale_products"
+        endpoint: "/sale"
     },
     {
         id: "USER_ACCOUNT_LINK",
         icon : require("../icons/bottom_bar/dark_user.png"),
         title: "Account",
-        endpoint: "/user_account"
+        endpoint: "/userAccount"
     },
     {
         id: "ABOUT_LINK",

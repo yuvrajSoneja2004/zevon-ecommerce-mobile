@@ -33,7 +33,11 @@ const isDarkMode = useSelector(state => state.theme.isDarkMode);
 const theme = useSelector(state => isDarkMode ? state.theme.darkTheme : state.theme.lightTheme);
 const dispatch = useDispatch();
 
-console.log(theme, 'this is the theme state')
+console.log(theme, 'this is the theme state');
+
+
+//testing
+const userDetails = useSelector(state => state.userInfo);
 
 
 
@@ -55,7 +59,7 @@ useEffect(() => {
             setTrendingProducts(res);
 
         } catch (error) {
-            alert("error at the tine of fetching data" + error)
+            alert("error at the tine of fetching data" + error);
         }
         finally {
             setIsLoadingTrending(false)
@@ -63,6 +67,11 @@ useEffect(() => {
     }
 getData();
 } , [])
+
+
+useEffect(() => {
+    console.log(userDetails , 'redux user  details')
+})
 
   return (
    <SafeAreaView style={{flex: 1, backgroundColor: theme.bg }}>

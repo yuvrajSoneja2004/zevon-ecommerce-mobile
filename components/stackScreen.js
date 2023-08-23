@@ -26,7 +26,7 @@ const theme = useSelector(state => isDarkMode ? state.theme.darkTheme : state.th
     </TouchableOpacity>
   ),
     headerRight: () => {
-        return <TouchableOpacity>
+        return <TouchableOpacity onPress={() => {router.push("/shoppingBag")}}>
             {
               !isDarkMode ? (
                 <Image  source={require("../assets/shopping-bag.png")} style={{width: 25 , height: 25 }}/>
@@ -36,7 +36,8 @@ const theme = useSelector(state => isDarkMode ? state.theme.darkTheme : state.th
             }
         </TouchableOpacity>
     },
-    headerStyle: {backgroundColor: theme.bg}
+    headerStyle: {backgroundColor: theme.bg},
+    contentStyle: {backgroundColor: theme.bg}
   }}
   />
 }
