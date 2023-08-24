@@ -99,7 +99,7 @@ const [isCartLoading , setIsCartLoading] = useState(false);
 console.log(userDetails , 'Why my penis')
 
 // Adding item to cart
-const addToCart = async (PRODUCT_TO_ADD) => {
+const addToCart = async () => {
     setIsCartLoading(true)
     try {
         let postProduct = await axios.put(`https://purple-anemone-veil.cyclic.app/addToCart/${userDetails._id}` , {
