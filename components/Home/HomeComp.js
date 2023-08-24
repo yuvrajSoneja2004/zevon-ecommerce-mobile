@@ -89,7 +89,9 @@ useEffect(() => {
             <View style={{width: '100%' , display: 'flex' , justifyContent: 'center' , alignItems: 'center',     backgroundColor: '#ebebeb'
 , flexDirection: 'row' , borderRadius: 200}} >
                 <Image  source={require("../../icons/search.png")}  style={{width: 22 , height: 22 ,marginRight: 3}}/>
-            <TextInput  style={S.input} numberOfLines={1} maxLength={40} placeholder='Search Products'/>
+          <TouchableOpacity style={{width: '80%' , height: 47}} onPress={() => {navigate.push("/searchScreen")}}>
+          <TextInput  style={S.input} numberOfLines={1} maxLength={40} placeholder='Search Products' editable={false} />
+          </TouchableOpacity>
             </View>
         </View>
         </View>
@@ -218,7 +220,7 @@ inputWrapper: {
     width:'90%',
 },
 input: {
-    width: '80%',
+    width: '100%',
     height: '100%',
     paddingTop: 10,
     borderRadius: 10,

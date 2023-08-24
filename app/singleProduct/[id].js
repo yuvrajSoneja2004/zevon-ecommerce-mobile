@@ -193,7 +193,6 @@ if (!products) return null;
                 renderItem={({item, index}) => (
                     <TouchableOpacity onPress={() => {
                         setCurrentSelectedProductColor(item)
-                        addToCart(item);
                     }} style={S.selectProductColor(item , currentSelectedProductColor , index )}>
                         {/* <View style={{}}></View> */}
                     </TouchableOpacity>
